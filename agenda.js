@@ -13,45 +13,64 @@ let cadastros = {};
 
 function menu() {
     console.clear()
-    console.log("**Agenda**\n")
+    console.log(verde, "**Agenda**\n", reset)
 
-    const opcao = Number(readline.question("\ 1. cadastrar usuarios \n 2. mostrar dados de um usuario\n 3. listar todos os nomes cadastrados \n 4. remover usuario \n 5. limpar toda agenda  \n 6. Gravar arquivo \n 7. ler arquivo \n 8. sair\n\n\n opcao: "))
-    return opcao 
+    console.log("\ 1. cadastrar usuarios \n 2. mostrar dados de um usuario\n 3. listar todos os nomes cadastrados \n 4. remover usuario \n 5. limpar toda agenda  \n 6. Gravar arquivo \n 7. ler arquivo \n 8. sair\n");
+    const opcao = Number(readline.question(`${verde}Opcao: ${reset}`));
+    return opcao ;
 
     
+}
+function validarEmail(email) {
+    const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    return regex.test(email);
+}
+function validarFone(fone) {
+    const regex = /^\d{2}\s\d{4,5}-\d{4}$/;
+
+    if (regex.test(fone)) {
+        return true;
+    } else {
+        return false;
+    }
 }
 
 function adicionar() {
     console.clear();
-    console.log(verde, "**Cadastrar Usuario**\n", reset);
+    console.log(amarelo, "**Cadastrar Usuario**\n", reset);
 
     let nome;
     let telefone;
     let email;
 
-   
     do {
-        nome = readline.question("Digite o nome: ")
+        nome = readline.question("Digite o nome: ");
         if (nome === "") {
             console.log("O nome não pode estar em branco. Tente novamente.");
         }
     } while (nome === "");
 
-   
     do {
-        telefone = readline.question("Digite o Telefone: ")
+        telefone = readline.question("Digite o Telefone: ");
         if (telefone === "") {
             console.log("O telefone não pode estar em branco. Tente novamente.");
+        } else if (validarFone(telefone)== false) {
+            console.log("Telefone inválido! Tente novamente.");
+            telefone = ""; 
         }
     } while (telefone === "");
 
-   
     do {
-        email = readline.question("Digite o Email: ")
+        email = readline.question("Digite o Email: ");
         if (email === "") {
             console.log("O email não pode estar em branco. Tente novamente.");
+        }  else if (validarEmail(email)== false) {
+            console.log("Email inválido! Tente novamente.");
+            email = ""; 
         }
     } while (email === "");
+
+
 
    
     cadastros[nome] = { telefone, email };
@@ -60,7 +79,7 @@ function adicionar() {
 
 function listarUser() {
     console.clear()
-    console.log(amarelo, "**Mostar dados de um usuario**\n", reset)
+    console.log(verde, "**Mostar dados de um usuario**\n", reset)
 
     const nome = readline.question("Informe o nome do usuario: ")
     const user = cadastros[nome];
@@ -84,7 +103,7 @@ readline.question("\nEnter para continuar!");
 
 function listar() {
     console.clear();
-    console.log(verde, "**Listar todos os cadastros**\n", reset);
+    console.log(azul, "**Listar todos os cadastros**\n", reset);
 
     let temCadastro = false;
 
@@ -125,7 +144,7 @@ readline.question("\nEnter para continuar!");
 
 function limpar() {
     console.clear()
-    console.log(amarelo, "**Limpar a agenda**\n", reset)
+    console.log(vermelho, "**Limpar a agenda**\n", reset)
    const resposta= readline.question("Voce tem certeza que deseja limpar toda a agenda(S/N)? ")
    if (resposta === "S" || resposta === "s" || resposta === "sim") {
     for (let nome in cadastros) {
@@ -215,4 +234,4 @@ while(true){
 
 
 
-menu()
+
